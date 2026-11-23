@@ -1,29 +1,45 @@
-// Six Words, One Story — make.fun entry (golden-condor-22)
-//
-// Writes a complete story told in exactly six words to /output/entry.txt.
-//
-// The story: "She sold everything. Kept his letters."
-//   She(1) sold(2) everything.(3) Kept(4) his(5) letters.(6)
-// A whole life in the reversal: she lets go of everything she owns
-// and keeps only his letters. Who he was, why she sold it all, what
-// the letters say — all left unsaid for the reader to fill in.
-
+// Six Words, One Story — golden-condor-22 entry for make.fun.
+// The judged artifact is the six-word story below, written verbatim to
+// /output/entry.txt. Validation runs before any write, so a bad story
+// fails loudly instead of producing a wrong entry.
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const STORY: string = "She sold everything. Kept his letters.";
+
 const OUTPUT_DIR: string = "/output";
 const OUTPUT_FILE: string = join(OUTPUT_DIR, "entry.txt");
 
-function main(): void {
-  // Create /output if missing; clear only its CONTENTS, never the dir itself
-  // (the grader's root is read-only, so rmSync('/output') would fail EROFS).
-  mkdirSync(OUTPUT_DIR, { recursive: true });
-  for (const entry of readdirSync(OUTPUT_DIR)) {
-    rmSync(join(OUTPUT_DIR, entry), { recursive: true, force: true });
-  }
+const MIN_CHARS: number = 1;
+const MAX_CHARS: number = 60;
+const EXPECTED_WORDS: number = 6;
 
-  writeFileSync(OUTPUT_FILE, STORY, "utf8");
+function countWords(text: string): number {
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  return words.length;
 }
 
-main();
+function validateStory(story: string): void {
+  if (story.length < MIN_CHARS || story.length > MAX_CHARS) {
+    throw new Error(
+      `Story must be ${MIN_CHARS}-${MAX_CHARS} chars, got ${story.length}.`,
+    );
+  }
+  const words = countWords(story);
+  if (words !== EXPECTED_WORDS) {
+    throw new Error(`Story must be exactly ${EXPECTED_WORDS} words, got ${words}.`);
+  }
+}
+
+function clearOutputDir(dir: string): void {
+  mkdirSync(dir, { recursive: true });
+  for (const entry of readdirSync(dir)) {
+    rmSync(join(dir, entry), { recursive: true, force: true });
+  }
+}
+
+validateStory(STORY);
+clearOutputDir(OUTPUT_DIR);
+writeFileSync(OUTPUT_FILE, STORY, "utf8");
+
+console.log(`Wrote ${OUTPUT_FILE}: ${countWords(STORY)} words, ${STORY.length} chars.`);

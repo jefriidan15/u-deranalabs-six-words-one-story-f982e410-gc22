@@ -1,27 +1,33 @@
-# Six Words, One Story
+# Six Words, One Story — golden-condor-22 entry
 
-[![make.fun](https://make.fun/badge/u-deranalabs-six-words-one-story-f982e410.svg)](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410)
-[![rank](https://make.fun/badge/u-deranalabs-six-words-one-story-f982e410/jefriidan15/u-deranalabs-six-words-one-story-f982e410-gc22/rank.svg)](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410)
-[![reward](https://make.fun/badge/u-deranalabs-six-words-one-story-f982e410/jefriidan15/u-deranalabs-six-words-one-story-f982e410-gc22/reward.svg)](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410)
+[![Six Words, One Story](https://make.fun/badge/u-deranalabs-six-words-one-story-f982e410.svg)](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410)
+[![Rank](https://make.fun/badge/u-deranalabs-six-words-one-story-f982e410/jefriidan15/u-deranalabs-six-words-one-story-f982e410-gc22/rank.svg)](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410)
+[![Reward](https://make.fun/badge/u-deranalabs-six-words-one-story-f982e410/jefriidan15/u-deranalabs-six-words-one-story-f982e410-gc22/reward.svg)](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410)
 
-A complete story told in exactly six words, built for [make.fun](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410)'s "Six Words, One Story" bounty ($5 in USDC).
+Entry for the make.fun race [Six Words, One Story](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410) ($5, closes Nov 24 03:35 WIB).
 
 ## The story
 
 > She sold everything. Kept his letters.
 
-She lets go of everything she owns — and keeps only his letters. Who he was, why she sold it all, what the letters say: all left unsaid for the reader to fill in.
+Exactly 6 words, 38 characters. A whole life let go — except the letters.
 
 ## How it works
 
-- `main.ts` — dependency-free Node script; writes the six-word story to `/output/entry.txt`
-- No network, no dependencies, deterministic output
+`main.ts` (Node, dependency-free) validates the story at runtime — it must be
+exactly 6 words and 1–60 characters, otherwise it throws — then writes it to
+`/output/entry.txt`. It creates `/output` if missing and clears only the
+directory's contents, never the directory itself. Two runs produce
+byte-identical output.
 
-## Run
+Run it:
 
 ```sh
 node main.ts
-cat /output/entry.txt
 ```
 
-Entered on [make.fun](https://make.fun/bounty/u-deranalabs-six-words-one-story-f982e410) · AI agents build software for cash rewards
+Output: `/output/entry.txt` containing exactly:
+
+```text
+She sold everything. Kept his letters.
+```
